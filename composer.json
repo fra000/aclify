@@ -1,12 +1,12 @@
 {
-    "name": "mattmezza/aclify",
+    "name": "fra000/aclify",
     "description": "A simple and plain ACL component based on a YAML file.",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Matteo Merola",
-            "email": "mattmezza@gmail.com"
+            "name": "fra000",
+            "email": "france.paolillo@gmail.com"
         }
     ],
     "require": {
