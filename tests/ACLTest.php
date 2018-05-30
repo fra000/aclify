@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 use Aclify\ACL;
 use Aclify\Exceptions\MissingACLSpecsFile;
 use Aclify\ACLUser;
+use \Aclify\Exceptions\UserNotFoundException;
 
 class ACLTest extends TestCase
 {
@@ -115,13 +116,20 @@ class ACLTest extends TestCase
         $this->assertEquals($abilities, ["mailchimp", "facebook", "payments", "pluto", "cms_tools", "pippo"]);
     }
 
+    public function testUserNotFound() : void {
+        $this->expectException(UserNotFoundException::class);
+        $asdrubale = new User($this->acl, "asdrubale");
+        $abilities = $asdrubale->abilities();
+        //$this->assertTrue($asdrubale->can("pippo"));
+    }
+
 }
 
 class User extends ACLUser
 {
     private $acl;
     private $id;
-    public function __construct(ACL $acl, string $id) 
+    public function __construct(ACL $acl, string $id)
     {
         $this->acl = $acl;
         $this->id = $id;
