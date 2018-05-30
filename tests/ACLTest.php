@@ -120,6 +120,7 @@ class ACLTest extends TestCase
         $this->expectException(UserNotFoundException::class);
         $asdrubale = new User($this->acl, "asdrubale");
         $abilities = $asdrubale->abilities();
+        //$this->assertTrue($asdrubale->can("pippo"));
     }
 
 }
@@ -128,7 +129,7 @@ class User extends ACLUser
 {
     private $acl;
     private $id;
-    public function __construct(ACL $acl, string $id) 
+    public function __construct(ACL $acl, string $id)
     {
         $this->acl = $acl;
         $this->id = $id;

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Aclify;
 
@@ -31,9 +31,9 @@ class ACL
         return collect($this->specs["roles"])->keys();
     }
 
-    public function rolesOf(string $user) : array 
+    public function rolesOf(string $user) : array
     {
-        if(!isset($this->specs["users"][$user])){
+        if (!isset($this->specs["users"][$user])) {
             throw new UserNotFoundException();
         }
         return $this->specs["users"][$user];
@@ -41,9 +41,15 @@ class ACL
 
     public function abilitiesOf(string $user) : array
     {
-        return collect($this->rolesOf($user))->map(function ($role) {
-            return $this->abilities($role);
-        })->flatten()->unique()->toArray();
+        try {
+            return collect($this->rolesOf($user))->map(function ($role) {
+                return $this->abilities($role);
+            })->flatten()->unique()->toArray();
+        } catch (UserNotFoundException $e) {
+            throw new UserNotFoundException();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function can(string $user, string $ability) : bool
